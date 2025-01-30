@@ -70,3 +70,9 @@ TEST(SymTableTest, Free)
     SymTable_put(table, "key2", "value2");
     SymTable_free(table);
 }
+
+int main(int argc, char **argv)
+{
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
