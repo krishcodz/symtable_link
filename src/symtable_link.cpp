@@ -60,11 +60,11 @@ void SymTable_free(SymTable_t oSymTable)
     {
         Node *tmp = current;
         current = current->next;
-        delete[] tmp->key;
-        delete tmp;
+        free((void *)tmp->key);
+        delete (tmp);
     }
 
-    delete oSymTable;
+    delete (oSymTable);
 }
 
 int SymTable_getLength(SymTable_t oSymTable)
@@ -175,7 +175,7 @@ void *SymTable_remove(SymTable_t oSymTable, const char *pcKey)
             else
                 oSymTable->root = current->next;
 
-            delete[] current->key;
+            free((void *)current->key);
             delete current;
             oSymTable->len--;
             return oldValue;
