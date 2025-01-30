@@ -1,5 +1,11 @@
 #include <gtest/gtest.h>
 #include "SymTable.h"
+#include <iostream>
+
+void printKeyValue(const char *pcKey, const void *pvValue, void *pvExtra)
+{
+    std::cout << "Key: " << pcKey << ", Value: " << pvValue << std::endl;
+}
 
 TEST(SymTableTest, Creation)
 {
@@ -68,6 +74,18 @@ TEST(SymTableTest, Free)
     ASSERT_NE(table, nullptr);
     SymTable_put(table, "key1", "value1");
     SymTable_put(table, "key2", "value2");
+    SymTable_free(table);
+}
+
+TEST(SymTableTest, Map)
+{
+    SymTable_t table = SymTable_new();
+    ASSERT_NE(table, nullptr);
+    SymTable_put(table, "key1", (void *)123);
+    SymTable_put(table, "key2", (void *)456);
+    SymTable_put(table, "key3", (void *)789);
+    SymTable_map(table, printKeyValue, nullptr);
+
     SymTable_free(table);
 }
 

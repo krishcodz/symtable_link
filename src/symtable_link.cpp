@@ -187,3 +187,20 @@ void *SymTable_remove(SymTable_t oSymTable, const char *pcKey)
 
     return nullptr;
 }
+
+void SymTable_map(SymTable_t oSymTable,
+                  void (*pfApply)(const char *pcKey,
+                                  const void *pvValue, void *pvExtra),
+                  const void *pvExtra)
+{
+    if (!oSymTable || !pfApply)
+        return;
+
+    Node *current = oSymTable->root;
+
+    while (current)
+    {
+        pfApply(current->key, current->value, (void *)pvExtra);
+        current = current->next;
+    }
+}
