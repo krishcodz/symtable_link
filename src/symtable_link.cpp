@@ -1,6 +1,7 @@
 #include "SymTable.h"
 #include <cstdlib>
 
+// Node structure to store key-value pairs
 struct Node
 {
     const char *key;
@@ -8,12 +9,14 @@ struct Node
     Node *next;
 };
 
+// Symbol Table structure
 struct SymTable
 {
     struct Node *root;
     int len;
 };
 
+// Duplicates a string
 char *mystrdup(const char *s)
 {
     int len = 0;
@@ -30,6 +33,7 @@ char *mystrdup(const char *s)
     return copy;
 }
 
+// Compares two strings
 int mystrcmp(const char *s1, const char *s2)
 {
     while (*s1 && (*s1 == *s2))
@@ -40,6 +44,7 @@ int mystrcmp(const char *s1, const char *s2)
     return *(unsigned char *)s1 - *(unsigned char *)s2;
 }
 
+// Creates a new symbol table
 SymTable_t SymTable_new(void)
 {
     SymTable_t table = new SymTable();
@@ -50,6 +55,7 @@ SymTable_t SymTable_new(void)
     return table;
 }
 
+// Frees the symbol table
 void SymTable_free(SymTable_t oSymTable)
 {
     if (!oSymTable)
@@ -67,11 +73,13 @@ void SymTable_free(SymTable_t oSymTable)
     delete (oSymTable);
 }
 
+// Returns the number of elements in the table
 int SymTable_getLength(SymTable_t oSymTable)
 {
     return oSymTable ? oSymTable->len : 0;
 }
 
+// Adds a new key-value pair
 int SymTable_put(SymTable_t oSymTable, const char *pcKey, const void *pvValue)
 {
     if (!oSymTable || !pcKey)
@@ -81,7 +89,7 @@ int SymTable_put(SymTable_t oSymTable, const char *pcKey, const void *pvValue)
     while (current)
     {
         if (mystrcmp(current->key, pcKey) == 0)
-            return 0;
+            return 0; // Key already exists
         current = current->next;
     }
 
@@ -104,6 +112,7 @@ int SymTable_put(SymTable_t oSymTable, const char *pcKey, const void *pvValue)
     return 1;
 }
 
+// Replaces a value for an existing key
 void *SymTable_replace(SymTable_t oSymTable, const char *pcKey, const void *pvValue)
 {
     if (!oSymTable || !pcKey)
@@ -124,6 +133,7 @@ void *SymTable_replace(SymTable_t oSymTable, const char *pcKey, const void *pvVa
     return nullptr;
 }
 
+// Checks if a key exists in the table
 int SymTable_contains(SymTable_t oSymTable, const char *pcKey)
 {
     if (!oSymTable || !pcKey)
@@ -140,6 +150,7 @@ int SymTable_contains(SymTable_t oSymTable, const char *pcKey)
     return 0;
 }
 
+// Gets the value of a key
 void *SymTable_get(SymTable_t oSymTable, const char *pcKey)
 {
     if (!oSymTable || !pcKey)
@@ -156,6 +167,7 @@ void *SymTable_get(SymTable_t oSymTable, const char *pcKey)
     return nullptr;
 }
 
+// Removes a key-value pair
 void *SymTable_remove(SymTable_t oSymTable, const char *pcKey)
 {
     if (!oSymTable || !pcKey)
@@ -188,6 +200,7 @@ void *SymTable_remove(SymTable_t oSymTable, const char *pcKey)
     return nullptr;
 }
 
+// Applies a function to each key-value pair
 void SymTable_map(SymTable_t oSymTable,
                   void (*pfApply)(const char *pcKey,
                                   const void *pvValue, void *pvExtra),

@@ -14,7 +14,7 @@ set(TEST_DIR ${CMAKE_SOURCE_DIR}/tests)
 
 # Add source files
 set(SYM_TABLE_SRC ${SRC_DIR}/symtable_link.cpp)
-set(TEST_SRC ${TEST_DIR}/test_linked.cpp)
+set(TEST_SRC ${TEST_DIR}/symtable_test.cpp)
 
 # Add executable target for the test
 add_executable(test_linked ${SYM_TABLE_SRC} ${TEST_SRC})
@@ -36,8 +36,8 @@ add_custom_target(run_tests
     COMMENT "Running tests"
 )
 
-# Custom target for cleaning the build folder
+# Custom target for cleaning the build directory (keeping the build folder)
 add_custom_target(clean_build
-    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}
-    COMMENT "Cleaning build directory"
+    COMMAND ${CMAKE_COMMAND} -E rm -rf ${CMAKE_BINARY_DIR}/*
+    COMMENT "Cleaning build contents but keeping the build directory"
 )
