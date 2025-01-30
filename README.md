@@ -53,7 +53,7 @@ cmake ..
 Build the project:
 
 ```bash
-cmake --build ..
+cmake --build .
 ```
 
 ### 3. Run tests:
